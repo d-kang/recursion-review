@@ -7,8 +7,11 @@ const parseJSON = function(json) {
   const parseArray = [];
   const parseObject = {};
   if (json.startsWith('[')) {
+    debugger;
     const jsonToArray = json.split('');
-    const validElems = jsonToArray.filter(a => a !== '[' && a !== ']');
+    const validElems = jsonToArray.filter(a =>
+      a !== '[' && a !== ']' && a !== '"'
+    );
     validElems.forEach(a => parseArray.push(parseJSON(a)));
     return parseArray;
   }
@@ -28,15 +31,17 @@ const parseJSON = function(json) {
 
 };
 
-console.log(parseJSON('9'));
-console.log(parseJSON('null'));
-console.log(parseJSON('true'));
-console.log(parseJSON('false'));
-console.log(parseJSON( JSON.stringify('Hello world') ));
-console.log(parseJSON( JSON.stringify([]) ));
-console.log(JSON.stringify([]).startsWith('['));
-console.log(_.isEqual( parseJSON( JSON.stringify([]) ), [] ));
-console.log(parseJSON( JSON.stringify([8]) ));
+// console.log(parseJSON('9'));
+// console.log(parseJSON('null'));
+// console.log(parseJSON('true'));
+// console.log(parseJSON('false'));
+// console.log(parseJSON( JSON.stringify('Hello world') ));
+// console.log(parseJSON( JSON.stringify([]) ));
+// console.log(JSON.stringify([]).startsWith('['));
+// console.log(_.isEqual( parseJSON( JSON.stringify([]) ), [] ));
+// console.log(parseJSON( JSON.stringify([8]) ));
+// console.log(Array.isArray(parseJSON( JSON.stringify([8]) )));
+console.log(parseJSON( JSON.stringify(['a']) ));
 
 
 // var stringifiedObjects = [
