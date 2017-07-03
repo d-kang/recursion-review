@@ -10,6 +10,8 @@ var stringifyJSON = function(obj) {
     const elements = obj.map(elem => stringifyJSON(elem));
     stringified += elements.join(',');
     stringified += ']';
+  } else if (typeof obj === 'object' && obj !== null) {
+    stringified += '{}';
   } else if (typeof obj === 'number') {
     stringified += `${obj}`;
   } else if (obj === null) {
