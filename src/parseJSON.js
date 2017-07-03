@@ -7,13 +7,20 @@ var parseJSON = function(json) {
   var isNumber = Number(json);
   if (isNumber === isNumber) {
     return isNumber;
-  } else {
+  } else if (json === 'null') {
     return null;
+  } else if (json === 'true') {
+    return true;
+  } else if (json === 'false') {
+    return false;
   }
+
 };
 
 console.log(parseJSON('9'));
 console.log(parseJSON('null'));
+console.log(parseJSON('true'));
+console.log(parseJSON('false'));
 
 
 // var stringifiedObjects = [
