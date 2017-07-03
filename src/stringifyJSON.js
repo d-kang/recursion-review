@@ -11,7 +11,9 @@ var stringifyJSON = function(obj) {
     stringified += elements.join(',');
     stringified += ']';
   } else if (typeof obj === 'object' && obj !== null) {
-    const keys = Object.keys(obj);
+    let keys = Object.keys(obj);
+    keys = keys.filter(a => obj[a] !== undefined );
+    keys = keys.filter(a => typeof obj[a] !== 'function' );
     const len = keys.length - 2;
     stringified += '{';
     keys.forEach((key, i) => {
@@ -37,29 +39,3 @@ var stringifyJSON = function(obj) {
   }
   return stringified;
 };
-
-console.log(stringifyJSON( {a: 'apple'}));
-
-var stringifiableObjects = [
-  9,
-  null,
-  true,
-  false,
-  'Hello world',
-  [],
-  [8],
-  ['hi'],
-  [8, 'hi'],
-  [1, 0, -1, -0.3, 0.3, 1343.32, 3345, 0.00011999999999999999],
-  [8, [[], 3, 4]],
-  [[[['foo']]]],
-  {},
-  {'a': 'apple'},
-  {'foo': true, 'bar': false, 'baz': null},
-  {'boolean, true': true, 'boolean, false': false, 'null': null },
-  // basic nesting
-  {'a': {'b': 'c'}},
-  {'a': ['b', 'c']},
-  [{'a': 'b'}, {'c': 'd'}],
-  {'a': [], 'c': {}, 'b': true}
-];
