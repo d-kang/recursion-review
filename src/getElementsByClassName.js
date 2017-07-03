@@ -3,16 +3,21 @@
 //   return document.getElementsByClassName(className);
 // };
 
-// But instead we're going to implement it from scratch:
+// But instead we're going to implement it from scratch
+
 var getElementsByClassName = function(className) {
-  const nodeList = [];
-  const traverse = (className, $node) => {
-    if ($node.classList.contains(className)) {
+  var $body = document.body;
+  var nodeList = [];
+  var traverse = function(className, $node) {
+    if ($node.className && $node.classList.contains(className)) {
       nodeList.push($node);
     }
+    if ($node.hasChildNodes()) {
+      $node.childNodes.forEach(function(child) {
+        traverse(className, child);
+      });
+    }
   };
-  traverse(className, document.body);
+  traverse(className, $body);
   return nodeList;
 };
-
-console.log(getElementsByClassName('targetClassName'));
