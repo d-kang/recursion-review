@@ -3,39 +3,31 @@
 
 // but you don't so you're going to write it from scratch:
 
-var stringifyJSON = function(obj) {
+var stringifyJSON = obj => {
   let stringified = '';
   if (Array.isArray(obj)) {
-    stringified += '[';
     const elements = obj.map(elem => stringifyJSON(elem));
-    stringified += elements.join(',');
-    stringified += ']';
+    stringified += `[${elements.join(',')}]`;
   } else if (typeof obj === 'object' && obj !== null) {
-    let keys = Object.keys(obj);
-    keys = keys.filter(a => obj[a] !== undefined );
-    keys = keys.filter(a => typeof obj[a] !== 'function' );
+    const keys = Object.keys(obj);
     const len = keys.length - 2;
+    const validKeyValues = keys.filter(key =>
+      obj[key] !== undefined && typeof obj[key] !== 'function');
     stringified += '{';
-    keys.forEach((key, i) => {
+    validKeyValues.forEach((key, i) => {
       const value = obj[key];
-      stringified += stringifyJSON(key);
-      stringified += ':';
-      stringified += stringifyJSON(value);
+      stringified += `${stringifyJSON(key)}:${stringifyJSON(value)}`;
       if (i <= len) {
         stringified += ',';
       }
     });
     stringified += '}';
-  } else if (typeof obj === 'number') {
-    stringified += `${obj}`;
-  } else if (obj === null) {
-    stringified += 'null';
-  } else if (obj === true) {
-    stringified += 'true';
-  } else if (obj === false) {
-    stringified += 'false';
   } else if (typeof obj === 'string') {
     stringified += `"${obj}"`;
+  } else if (obj === null) {
+    stringified += 'null';
+  } else {
+    stringified += obj.toString();
   }
   return stringified;
 };
