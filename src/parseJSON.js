@@ -13,6 +13,8 @@ var parseJSON = function(json) {
     return true;
   } else if (json === 'false') {
     return false;
+  } else {
+    return json.replace(/"/g, '');
   }
 
 };
@@ -21,6 +23,8 @@ console.log(parseJSON('9'));
 console.log(parseJSON('null'));
 console.log(parseJSON('true'));
 console.log(parseJSON('false'));
+console.log(parseJSON( JSON.stringify('Hello world') ));
+console.log(parseJSON( JSON.stringify('[]') ));
 
 
 // var stringifiedObjects = [
