@@ -11,7 +11,19 @@ var stringifyJSON = function(obj) {
     stringified += elements.join(',');
     stringified += ']';
   } else if (typeof obj === 'object' && obj !== null) {
-    stringified += '{}';
+    const keys = Object.keys(obj);
+    const len = keys.length - 2;
+    stringified += '{';
+    keys.forEach((key, i) => {
+      const value = obj[key];
+      stringified += stringifyJSON(key);
+      stringified += ':';
+      stringified += stringifyJSON(value);
+      if (i <= len) {
+        stringified += ',';
+      }
+    });
+    stringified += '}';
   } else if (typeof obj === 'number') {
     stringified += `${obj}`;
   } else if (obj === null) {
@@ -26,7 +38,7 @@ var stringifyJSON = function(obj) {
   return stringified;
 };
 
-console.log(stringifyJSON(9));
+console.log(stringifyJSON( {a: 'apple'}));
 
 var stringifiableObjects = [
   9,
