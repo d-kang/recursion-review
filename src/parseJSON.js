@@ -2,12 +2,17 @@
 // var parseJSON = JSON.parse;
 
 // but you're not, so you'll write it from scratch:
-var parseJSON = function(json) {
-  var isNumber = Number(json);
-
-  if (json.includes('[')){
-    return [];
+const parseJSON = function(json) {
+  const isNumber = Number(json);
+  const parseArray = [];
+  const parseObject = {};
+  if (json.startsWith('[')) {
+    const jsonToArray = json.split('');
+    const validElems = jsonToArray.filter(a => a !== '[' && a !== ']');
+    validElems.forEach(a => parseArray.push(parseJSON(a)));
+    return parseArray;
   }
+
 
   if (isNumber === isNumber) {
     return isNumber;
@@ -29,8 +34,9 @@ console.log(parseJSON('true'));
 console.log(parseJSON('false'));
 console.log(parseJSON( JSON.stringify('Hello world') ));
 console.log(parseJSON( JSON.stringify([]) ));
-console.log(JSON.stringify([]).includes('['));
+console.log(JSON.stringify([]).startsWith('['));
 console.log(_.isEqual( parseJSON( JSON.stringify([]) ), [] ));
+console.log(parseJSON( JSON.stringify([8]) ));
 
 
 // var stringifiedObjects = [
