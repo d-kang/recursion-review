@@ -4,20 +4,21 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
+  let stringified = '';
   if (Array.isArray(obj)) {
-    obj = `[]`;
+    stringified += `[]`;
   } else if (typeof obj === 'number') {
-    obj = `${obj}`;
+    stringified += `${obj}`;
   } else if (obj === null) {
-    obj = 'null';
+    stringified += 'null';
   } else if (obj === true) {
-    obj = 'true';
+    stringified += 'true';
   } else if (obj === false) {
-    obj = 'false';
+    stringified += 'false';
   } else if (typeof obj === 'string') {
-    obj = `"${obj}"`;
+    stringified += `"${obj}"`;
   }
-  return obj;
+  return stringified;
 };
 
 console.log(stringifyJSON(9));
