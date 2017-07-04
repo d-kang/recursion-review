@@ -9,9 +9,12 @@ const parseJSON = function(json) {
   if (json.startsWith('[')) {
     debugger;
     const jsonToArray = json.split('');
-    const validElems = jsonToArray.filter(a =>
+    let validElems = jsonToArray.filter(a =>
       a !== '[' && a !== ']' && a !== '"'
     );
+    if (validElems.indexOf(',') === -1) {
+      validElems = [validElems.join('')];
+    }
     validElems.forEach(a => parseArray.push(parseJSON(a)));
     return parseArray;
   }
@@ -39,9 +42,20 @@ const parseJSON = function(json) {
 // console.log(parseJSON( JSON.stringify([]) ));
 // console.log(JSON.stringify([]).startsWith('['));
 // console.log(_.isEqual( parseJSON( JSON.stringify([]) ), [] ));
+
+//Can Parse Array With Single One Character Primitive or Single Digit Number
 // console.log(parseJSON( JSON.stringify([8]) ));
 // console.log(Array.isArray(parseJSON( JSON.stringify([8]) )));
-console.log(parseJSON( JSON.stringify(['a']) ));
+// console.log(parseJSON( JSON.stringify(['a']) ));
+
+// Can Parse Array of Single String or Number of Varying Lenth
+console.log(parseJSON( JSON.stringify(['ab']) ));
+console.log(parseJSON( JSON.stringify(['89']) ));
+console.log(parseJSON( JSON.stringify(['Hello my name is David']) ));
+console.log(parseJSON( JSON.stringify(['890000']) ));
+// jsonToArray === ["[", """, "a", "b", """, "]"]
+
+// console.log(parseJSON( JSON.stringify(['a', 'b']) ));
 
 
 // var stringifiedObjects = [
