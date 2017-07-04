@@ -2,6 +2,15 @@
 // var parseJSON = JSON.parse;
 
 // but you're not, so you'll write it from scratch:
+const manageCommas = function(elems) {
+  if (elems.indexOf(',') === -1) {
+    elems = [elems.join('')];
+  } else if (elems.indexOf(',')) {
+
+  }
+  return elems;
+};
+
 const parseJSON = function(json) {
   const isNumber = Number(json);
   const parseArray = [];
@@ -12,13 +21,10 @@ const parseJSON = function(json) {
     let validElems = jsonToArray.filter(a =>
       a !== '[' && a !== ']' && a !== '"'
     );
-    if (validElems.indexOf(',') === -1) {
-      validElems = [validElems.join('')];
-    }
-    validElems.forEach(a => parseArray.push(parseJSON(a)));
+    const managed = manageCommas(validElems);
+    managed.forEach(a => parseArray.push(parseJSON(a)));
     return parseArray;
   }
-
 
   if (isNumber === isNumber) {
     return isNumber;
@@ -55,7 +61,7 @@ console.log(parseJSON( JSON.stringify(['Hello my name is David']) ));
 console.log(parseJSON( JSON.stringify(['890000']) ));
 // jsonToArray === ["[", """, "a", "b", """, "]"]
 
-// console.log(parseJSON( JSON.stringify(['a', 'b']) ));
+console.log(parseJSON( JSON.stringify(['a', 'b']) ));
 
 
 // var stringifiedObjects = [
