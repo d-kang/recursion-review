@@ -3,12 +3,31 @@
 
 // but you're not, so you'll write it from scratch:
 const manageCommas = function(elems) {
-  if (elems.indexOf(',') === -1) {
-    elems = [elems.join('')];
-  } else if (elems.indexOf(',')) {
-
+  // validElems === ["a", ",", "b"]
+  // commaIndex === 1
+  // validElems === ["a", "ba", "c", ",", "e", "f", "g"]
+  // commaIndex === 3
+  const commaIndex = elems.indexOf(',');
+  debugger;
+  let string = '';
+  const acc = [];
+  if (commaIndex === -1) {
+    acc.push(elems.join(''));
+  } else {
+    let counter = '';
+    for (var i = 0; i < elems.length; i++) {
+      if (elems[i] !== ',') {
+        counter += elems[i];
+        if (i === elems.length - 1) {
+          acc.push(counter);
+        }
+      } else if (elems[i] === ',') {
+        acc.push(counter);
+        counter = '';
+      }
+    }
   }
-  return elems;
+  return acc;
 };
 
 const parseJSON = function(json) {
@@ -16,7 +35,6 @@ const parseJSON = function(json) {
   const parseArray = [];
   const parseObject = {};
   if (json.startsWith('[')) {
-    debugger;
     const jsonToArray = json.split('');
     let validElems = jsonToArray.filter(a =>
       a !== '[' && a !== ']' && a !== '"'
@@ -55,13 +73,20 @@ const parseJSON = function(json) {
 // console.log(parseJSON( JSON.stringify(['a']) ));
 
 // Can Parse Array of Single String or Number of Varying Lenth
-console.log(parseJSON( JSON.stringify(['ab']) ));
-console.log(parseJSON( JSON.stringify(['89']) ));
-console.log(parseJSON( JSON.stringify(['Hello my name is David']) ));
-console.log(parseJSON( JSON.stringify(['890000']) ));
+// console.log(parseJSON( JSON.stringify(['ab']) ));
+// console.log(parseJSON( JSON.stringify(['89']) ));
+// console.log(parseJSON( JSON.stringify(['Hello my name is David']) ));
+// console.log(parseJSON( JSON.stringify(['890000']) ));
 // jsonToArray === ["[", """, "a", "b", """, "]"]
 
+// Can Parse Array of Multiple Strings or Numbers of Any Length
 console.log(parseJSON( JSON.stringify(['a', 'b']) ));
+console.log(parseJSON( JSON.stringify(['a', 'b', 'd', 'e', 'f']) ));
+console.log(parseJSON( JSON.stringify(['1', '2', '3', '4', '5']) ));
+console.log(parseJSON( JSON.stringify(['123', '456', '789', '101112', '131415']) ));
+console.log(parseJSON( JSON.stringify(['abc', 'efg']) ));
+console.log(parseJSON( JSON.stringify(['abc', 'efg', 'hij', 'klmnop']) ));
+console.log(parseJSON( JSON.stringify(['abc', 'efg', 'hij', '123456']) ));
 
 
 // var stringifiedObjects = [
